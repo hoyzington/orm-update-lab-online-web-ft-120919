@@ -23,10 +23,9 @@ class Student
   end
 
   def save
-    sql = <<-SQL
-      CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY, name TEXT, grade INTEGER)
-    SQL
-    DB[:conn].execute(sql)
+    sql = "INSERT INTO songs (name, album) VALUES (?, ?)"
+    DB[:conn].execute(sql, self.name, self.album)
+    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM songs")[0][0]
   end
 
   def self.create(id=nil, name, grade)
@@ -37,21 +36,19 @@ class Student
 
   def self.new_from_db(array)
     sql = <<-SQL
-      CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY, name TEXT, grade INTEGER)
+      INSERT INTO students
     SQL
     DB[:conn].execute(sql)
   end
 
   def self.find_by_name(name)
-    sql = <<-SQL
-      CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY, name TEXT, grade INTEGER)
-    SQL
-    DB[:conn].execute(sql)
+    sql = "SELECT * FROM songs WHERE name = ?"
+    DB[:conn].execute(sql, name)[0][0]
   end
 
   def update
     sql = <<-SQL
-      CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY, name TEXT, grade INTEGER)
+      students 
     SQL
     DB[:conn].execute(sql)
   end
