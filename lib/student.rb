@@ -43,7 +43,7 @@ class Student
   end
 
   def self.find_by_name(name)
-    sql = "SELECT * FROM songs WHERE name = ?"
+    sql = "SELECT * FROM students WHERE name = ?"
     DB[:conn].execute(sql, name)[0][0]
   end
 
